@@ -45,6 +45,7 @@ make install
 # platforms are passed in on the command line
 platforms = [
     Linux(:x86_64, libc=:glibc),
+    Linux(:x86_64, :musl)
 ]
 
 # The products that we will ensure are always built
@@ -79,4 +80,3 @@ dependencies = [
 
 # Build the tarballs, and possibly a `build.jl` as well.
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies)
-
