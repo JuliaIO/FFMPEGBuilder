@@ -8,7 +8,7 @@ version = v"4.1.3"
 # Collection of sources required to build FFMPEG
 sources = [
     "https://ffmpeg.org/releases/ffmpeg-4.1.3.tar.bz2" =>
-    "b684fb43244a5c4caae652af9022ed5d85ce15210835bce054a33fb26033a1a5",
+    "29a679685bd7bc29158110f367edf67b31b451f2176f9d79d0f342b9e22d6a2a",
 
 ]
 
