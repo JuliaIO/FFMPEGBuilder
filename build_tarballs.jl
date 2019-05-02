@@ -3,11 +3,11 @@
 using BinaryBuilder
 
 name = "FFMPEG"
-version = v"4.1.0"
+version = v"4.1.3"
 
 # Collection of sources required to build FFMPEG
 sources = [
-    "https://ffmpeg.org/releases/ffmpeg-4.1.tar.bz2" =>
+    "https://ffmpeg.org/releases/ffmpeg-4.1.3.tar.bz2" =>
     "b684fb43244a5c4caae652af9022ed5d85ce15210835bce054a33fb26033a1a5",
 
 ]
@@ -44,7 +44,15 @@ make install
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-    Linux(:x86_64, libc=:glibc)
+    Linux(:i686, libc=:glibc),
+    Linux(:x86_64, libc=:glibc),
+    Linux(:aarch64, libc=:glibc),
+    Linux(:armv7l, libc=:glibc, call_abi=:eabihf),
+    Linux(:powerpc64le, libc=:glibc),
+    Linux(:i686, libc=:musl),
+    Linux(:x86_64, libc=:musl),
+    Linux(:aarch64, libc=:musl),
+    Linux(:armv7l, libc=:musl, call_abi=:eabihf)
 ]
 
 # The products that we will ensure are always built
