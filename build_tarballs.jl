@@ -40,13 +40,14 @@ apk add coreutils
   --enable-demuxers    \
   --enable-parsers     \
   --enable-encoder=libx264rgb \
-  --extra-cflags="-I../build/x86_64-linux-gnu/uw5cXs4c/destdir/include" \
-  --extra-ldflags="-L../build/x86_64-linux-gnu/uw5cXs4c/destdir/lib
+  --extra-cflags="-I../destdir/include" \
+  --extra-ldflags="-L../destdir/lib"
 #--enable-libx265
 make -j${nproc}
 make install
 
 """
+# For libx264rgb see discussion at https://stackoverflow.com/a/40409031/1364192
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
