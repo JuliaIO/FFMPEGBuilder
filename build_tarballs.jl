@@ -9,7 +9,6 @@ version = v"4.1.0"
 sources = [
     "https://ffmpeg.org/releases/ffmpeg-4.1.tar.bz2" =>
     "b684fb43244a5c4caae652af9022ed5d85ce15210835bce054a33fb26033a1a5",
-
 ]
 
 # Bash recipe for building across all platforms
