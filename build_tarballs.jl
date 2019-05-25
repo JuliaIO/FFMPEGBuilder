@@ -41,7 +41,7 @@ apk add coreutils
   --enable-parsers     \
   --enable-encoder=libx264rgb \
   --extra-cflags="-I../build/x86_64-linux-gnu/uw5cXs4c/destdir/include" \
-  --extra-ldflags="-L../build/x86_64-linux-gnu/uw5cXs4c/destdir/lib
+  --extra-ldflags="-L../build/x86_64-linux-gnu/uw5cXs4c/destdir/lib"
 #--enable-libx265
 make -j${nproc}
 make install
