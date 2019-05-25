@@ -34,7 +34,8 @@ apk add coreutils
   --enable-libmp3lame  \
   --enable-libvorbis   \
   --enable-libvpx      \
-  --enable-libx264
+  --enable-libx264     \
+  --enable-encoder=libx264rgb
 #--enable-libx265
 make -j${nproc}
 make install
