@@ -80,7 +80,7 @@ dependencies = [
     "https://github.com/staticfloat/OggBuilder/releases/download/v1.3.3-7/build_Ogg.v1.3.3.jl",
     "https://github.com/jpsamaroo/LibVPXBuilder/releases/download/v5.0.0/build_LibVPX.v5.0.0.jl",
     "https://github.com/jpsamaroo/YasmBuilder/releases/download/v1.3.0-pre/build_YasmBuilder.v1.3.0.jl",
-    "https://github.com/jpsamaroo/x264Builder/releases/download/v2018.2.12-noyasm/build_x264Builder.v2018.2.12-pre-noyasm.jl",
+    "https://github.com/ianshmean/x264Builder/releases/download/v2019.5.25-noyasm/build_x264Builder.v2019.5.25-noyasm.jl",
     #"https://github.com/jpsamaroo/x265Builder/releases/download/v2.8-noyasm/build_x265Builder.v2.8.0.jl",
 ]
 
