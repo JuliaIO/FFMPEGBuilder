@@ -39,9 +39,8 @@ apk add coreutils
   --enable-muxers      \
   --enable-demuxers    \
   --enable-parsers     \
-  --enable-encoder=libx264rgb \
-  --extra-cflags="-I../destdir/include" \
-  --extra-ldflags="-L../destdir/lib"
+  --extra-cflags="-I${prefix}/include" \
+  --extra-ldflags="-L${prefix}/lib"
 #--enable-libx265
 make -j${nproc}
 make install
