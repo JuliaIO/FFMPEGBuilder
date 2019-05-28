@@ -33,9 +33,7 @@ apk add yasm
   --enable-libfreetype \
   --enable-libmp3lame  \
   --enable-libvorbis   \
-  --enable-libvpx      \
   --enable-libx264     \
-  --enable-libx265     \
   --enable-encoders    \
   --enable-decoders    \
   --enable-muxers      \
@@ -43,7 +41,8 @@ apk add yasm
   --enable-parsers     \
   --extra-cflags="-I${prefix}/include" \
   --extra-ldflags="-L${prefix}/lib"
-
+# --enable-libx265
+# --enable-libvpx
 make -j${nproc}
 make install
 
@@ -52,28 +51,7 @@ make install
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
-platforms = [
-    # Windows
-    Windows(:i686),
-    Windows(:x86_64),
-
-    # linux
-    Linux(:i686, :glibc),
-    Linux(:x86_64, :glibc),
-    Linux(:aarch64, :glibc),
-    Linux(:armv7l, :glibc),
-    Linux(:powerpc64le, :glibc),
-
-    # musl
-    Linux(:i686, :musl),
-    Linux(:x86_64, :musl),
-    Linux(:aarch64, :musl),
-    Linux(:armv7l, :musl),
-
-    # The BSD's
-    FreeBSD(:x86_64),
-    MacOS(:x86_64),
-]
+platforms = supported_platforms()
 
 # The products that we will ensure are always built
 products(prefix) = [
@@ -99,9 +77,9 @@ dependencies = [
     "https://github.com/JuliaIO/LAMEBuilder/releases/download/v3.100.0-2/build_liblame.v3.100.0.jl",
     "https://github.com/JuliaIO/LibVorbisBuilder/releases/download/v1.3.6-2/build_libvorbis.v1.3.6.jl",
     "https://github.com/JuliaIO/OggBuilder/releases/download/v1.3.3-7/build_Ogg.v1.3.3.jl",
-    "https://github.com/JuliaIO/LibVPXBuilder/releases/download/v5.0.0/build_LibVPX.v5.0.0.jl",
+    #"https://github.com/JuliaIO/LibVPXBuilder/releases/download/v5.0.0/build_LibVPX.v5.0.0.jl",
     "https://github.com/JuliaIO/x264Builder/releases/download/v2019.5.25/build_x264Builder.v2019.5.25.jl",
-    "https://github.com/JuliaIO/x265Builder/releases/download/v3.0/build_x265Builder.v3.0.0.jl",
+    #"https://github.com/JuliaIO/x265Builder/releases/download/v3.0/build_x265Builder.v3.0.0.jl",
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
