@@ -18,6 +18,7 @@ cd $WORKSPACE/srcdir
 cd ffmpeg-4.1/
 sed -i 's/-lflite"/-lflite -lasound"/' configure
 apk add coreutils
+apk add yasm
 ./configure            \
   --prefix=$prefix     \
   --enable-gpl         \
@@ -34,6 +35,7 @@ apk add coreutils
   --enable-libvorbis   \
   --enable-libvpx      \
   --enable-libx264     \
+  --enable-libx265     \
   --enable-encoders    \
   --enable-decoders    \
   --enable-muxers      \
@@ -41,7 +43,7 @@ apk add coreutils
   --enable-parsers     \
   --extra-cflags="-I${prefix}/include" \
   --extra-ldflags="-L${prefix}/lib"
-#--enable-libx265
+
 make -j${nproc}
 make install
 
@@ -51,20 +53,39 @@ make install
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-    Linux(:x86_64, libc=:glibc)
+    # Windows
+    Windows(:i686),
+    Windows(:x86_64),
+
+    # linux
+    Linux(:i686, :glibc),
+    Linux(:x86_64, :glibc),
+    Linux(:aarch64, :glibc),
+    Linux(:armv7l, :glibc),
+    Linux(:powerpc64le, :glibc),
+
+    # musl
+    Linux(:i686, :musl),
+    Linux(:x86_64, :musl),
+    Linux(:aarch64, :musl),
+    Linux(:armv7l, :musl),
+
+    # The BSD's
+    FreeBSD(:x86_64),
+    MacOS(:x86_64),
 ]
 
 # The products that we will ensure are always built
 products(prefix) = [
-    LibraryProduct(prefix, "libavformat", Symbol("")),
-    LibraryProduct(prefix, "libavcodec", Symbol("")),
-    LibraryProduct(prefix, "libavutil", Symbol("")),
-    LibraryProduct(prefix, "libpostproc", Symbol("")),
-    LibraryProduct(prefix, "libswresample", Symbol("")),
-    LibraryProduct(prefix, "libavdevice", Symbol("")),
-    LibraryProduct(prefix, "libavresample", Symbol("")),
-    LibraryProduct(prefix, "libavfilter", Symbol("")),
-    LibraryProduct(prefix, "libswscale", Symbol(""))
+    LibraryProduct(prefix, "libavformat", :libavformat),
+    LibraryProduct(prefix, "libavcodec", :libavcodec),
+    LibraryProduct(prefix, "libavutil", :libavutil),
+    LibraryProduct(prefix, "libpostproc", :libpostproc),
+    LibraryProduct(prefix, "libswresample", :libswresample),
+    LibraryProduct(prefix, "libavdevice", :libavdevice),
+    LibraryProduct(prefix, "libavresample", :libavresample),
+    LibraryProduct(prefix, "libavfilter", :libavfilter),
+    LibraryProduct(prefix, "libswscale", :libswscale)
 ]
 
 # Dependencies that must be installed before this package can be built
@@ -75,13 +96,12 @@ dependencies = [
     "https://github.com/SimonDanisch/NASMBuilder/releases/download/2.13.3/build_nasm.v2.13.3.jl",
     "https://github.com/SimonDanisch/FribidiBuilder/releases/download/0.14.0/build_fribidi.v0.14.0.jl",
     "https://github.com/JuliaGraphics/FreeTypeBuilder/releases/download/v2.9.0-0/build.jl",
-    "https://github.com/SimonDanisch/LAMEBuilder/releases/download/3.100.0/build_liblame.v3.100.0.jl",
+    "https://github.com/JuliaIO/LAMEBuilder/releases/download/3.100.0/build_liblame.v3.100.0.jl",
     "https://github.com/JuliaIO/LibVorbisBuilder/releases/download/v1.3.6/build_libvorbis.v1.3.6.jl",
-    "https://github.com/staticfloat/OggBuilder/releases/download/v1.3.3-7/build_Ogg.v1.3.3.jl",
-    "https://github.com/jpsamaroo/LibVPXBuilder/releases/download/v5.0.0/build_LibVPX.v5.0.0.jl",
-    "https://github.com/jpsamaroo/YasmBuilder/releases/download/v1.3.0-pre/build_YasmBuilder.v1.3.0.jl",
-    "https://github.com/ianshmean/x264Builder/releases/download/v2019.5.25-noyasm/build_x264Builder.v2019.5.25-noyasm.jl",
-    #"https://github.com/jpsamaroo/x265Builder/releases/download/v2.8-noyasm/build_x265Builder.v2.8.0.jl",
+    "https://github.com/JuliaIO/OggBuilder/releases/download/v1.3.3-7/build_Ogg.v1.3.3.jl",
+    "https://github.com/JuliaIO/LibVPXBuilder/releases/download/v5.0.0/build_LibVPX.v5.0.0.jl",
+    "https://github.com/JuliaIO/x264Builder/releases/download/v2019.5.25/build_x264Builder.v2019.5.25.jl",
+    "https://github.com/JuliaIO/x265Builder/releases/download/v3.0/build_x265Builder.v3.0.0.jl",
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
