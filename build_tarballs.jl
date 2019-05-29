@@ -19,7 +19,40 @@ cd ffmpeg-4.1/
 sed -i 's/-lflite"/-lflite -lasound"/' configure
 apk add coreutils
 apk add yasm
+if [[ "${target}" == *-linux-* ]]; then
+    export ccOS="linux"
+elif [[ "${target}" == *-apple-* ]]; then
+    export ccOS="darwin"
+elif [[ "${target}" == *-w32-* ]]; then
+    export ccOS="win32"
+elif [[ "${target}" == *-w64-* ]]; then
+    export ccOS="win64"
+elif [[ "${target}" == *-unknown-freebsd* ]]; then
+    export ccOS="freebsd"
+else
+    export ccOS="linux"
+fi
+if [[ "${target}" == x86_64-* ]]; then
+    export ccARCH="x86_64"
+elif [[ "${target}" == i686-* ]]; then
+    export ccARCH="i686"
+elif [[ "${target}" == arm-* ]]; then
+    export ccARCH="arm"
+elif [[ "${target}" == aarch64-* ]]; then
+    export ccARCH="aarch64"
+elif [[ "${target}" == powerpc64le-* ]]; then
+    export ccARCH="powerpc64le"
+else
+    export ccARCH="x86_64"
+fi
+export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
 ./configure            \
+  --enable-cross-compile \
+  --cross-prefix=/opt/${target}/bin/${target}- \
+  --arch=${ccARCH}     \
+  --target-os=${ccOS}  \
+  --sysinclude=${prefix}/include \
+  --pkg-config=$(which pkg-config) \
   --prefix=$prefix     \
   --enable-gpl         \
   --enable-version3    \
@@ -71,7 +104,6 @@ products(prefix) = [
 dependencies = [
     "https://github.com/JuliaIO/LibassBuilder/releases/download/v0.14.0/build_libass.v0.14.0.jl",
     "https://github.com/SimonDanisch/FDKBuilder/releases/download/0.1.6/build_libfdk.v0.1.6.jl",
-    "https://github.com/SimonDanisch/NASMBuilder/releases/download/2.13.3/build_nasm.v2.13.3.jl",
     "https://github.com/SimonDanisch/FribidiBuilder/releases/download/0.14.0/build_fribidi.v0.14.0.jl",
     "https://github.com/JuliaGraphics/FreeTypeBuilder/releases/download/v2.9.0-0/build.jl",
     "https://github.com/JuliaIO/LAMEBuilder/releases/download/v3.100.0-2/build_liblame.v3.100.0.jl",
