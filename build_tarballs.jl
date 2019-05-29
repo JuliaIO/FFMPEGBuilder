@@ -54,6 +54,7 @@ export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
   --sysinclude=${prefix}/include \
   --pkg-config=$(which pkg-config) \
   --prefix=$prefix     \
+  --sysroot=/opt/${target} \
   --enable-gpl         \
   --enable-version3    \
   --enable-nonfree     \
