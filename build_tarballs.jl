@@ -46,6 +46,8 @@ else
     export ccARCH="x86_64"
 fi
 export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
+pkg-config --list-all
+pkg-config x265 --debug
 ./configure            \
   --enable-cross-compile \
   --cross-prefix=/opt/${target}/bin/${target}- \
@@ -53,6 +55,7 @@ export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
   --target-os=${ccOS}  \
   --sysinclude=${prefix}/include \
   --pkg-config=$(which pkg-config) \
+  --pkg-config-flags=--static \
   --prefix=$prefix     \
   --sysroot=/opt/${target}/${target}/sys-root \
   --enable-gpl         \
@@ -61,6 +64,7 @@ export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
   --disable-static     \
   --enable-shared      \
   --disable-debug      \
+  --disable-doc        \
   --enable-avresample  \
   --enable-libass      \
   --enable-libfdk-aac  \
@@ -68,31 +72,29 @@ export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
   --enable-libmp3lame  \
   --enable-libvorbis   \
   --enable-libx264     \
+  --enable-libx265     \
+  --enable-libvpx      \
   --enable-encoders    \
   --enable-decoders    \
   --enable-muxers      \
   --enable-demuxers    \
   --enable-parsers     \
   --extra-cflags="-I${prefix}/include" \
-  --extra-ldflags="-L${prefix}/lib" \
-  --disable-doc 
-# --enable-libx265
-# --enable-libvpx
+  --extra-ldflags="-L${prefix}/lib"
 make -j${nproc}
 make install
 
 """
-# For libx264rgb see discussion at https://stackoverflow.com/a/40409031/1364192
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
         # glibc Linuces
-        #Linux(:i686),
-        #Linux(:x86_64),
-        #Linux(:aarch64),
-        #Linux(:armv7l),
-        #Linux(:powerpc64le),
+        Linux(:i686),
+        Linux(:x86_64),
+        Linux(:aarch64),
+        Linux(:armv7l),
+        Linux(:powerpc64le),
 
         # musl Linuces
         Linux(:i686, :musl),
@@ -111,6 +113,10 @@ platforms = [
 
 # The products that we will ensure are always built
 products(prefix) = [
+    ExecutableProduct(prefix, "ffmpeg", :ffmpeg),
+    ExecutableProduct(prefix, "ffprobe", :ffprobe),
+    ExecutableProduct(prefix, "x264", :x264),
+    ExecutableProduct(prefix, "x265", :x265),
     LibraryProduct(prefix, "libavformat", :libavformat),
     LibraryProduct(prefix, "libavcodec", :libavcodec),
     LibraryProduct(prefix, "libavutil", :libavutil),
@@ -125,16 +131,18 @@ products(prefix) = [
 # Dependencies that must be installed before this package can be built
 # TODO: Theora and Opus once their releases are available
 dependencies = [
-    "https://github.com/JuliaIO/LibassBuilder/releases/download/v0.14.0/build_libass.v0.14.0.jl",
+    "https://github.com/JuliaIO/LibassBuilder/releases/download/v0.14.0-2/build_libass.v0.14.0.jl",
     "https://github.com/SimonDanisch/FDKBuilder/releases/download/0.1.6/build_libfdk.v0.1.6.jl",
     "https://github.com/SimonDanisch/FribidiBuilder/releases/download/0.14.0/build_fribidi.v0.14.0.jl",
-    "https://github.com/JuliaGraphics/FreeTypeBuilder/releases/download/v2.9.1-3/build_FreeType2.v2.9.1.jl",
+    "https://github.com/JuliaGraphics/FreeTypeBuilder/releases/download/v2.9.1-4/build_FreeType2.v2.10.0.jl",
     "https://github.com/JuliaIO/LAMEBuilder/releases/download/v3.100.0-2/build_liblame.v3.100.0.jl",
     "https://github.com/JuliaIO/LibVorbisBuilder/releases/download/v1.3.6-2/build_libvorbis.v1.3.6.jl",
     "https://github.com/JuliaIO/OggBuilder/releases/download/v1.3.3-7/build_Ogg.v1.3.3.jl",
-    #"https://github.com/JuliaIO/LibVPXBuilder/releases/download/v5.0.0/build_LibVPX.v5.0.0.jl",
+    "https://github.com/JuliaIO/LibVPXBuilder/releases/download/v1.8.0/build_LibVPX.v1.8.0.jl",
     "https://github.com/JuliaIO/x264Builder/releases/download/v2019.5.25/build_x264Builder.v2019.5.25.jl",
-    #"https://github.com/JuliaIO/x265Builder/releases/download/v3.0/build_x265Builder.v3.0.0.jl",
+    "https://github.com/JuliaIO/x265Builder/releases/download/v3.0.0-static/build_x265Builder.v3.0.0.jl",
+    "https://github.com/JuliaPackaging/Yggdrasil/releases/download/Bzip2-v1.0.6-0/build_Bzip2.v1.0.6.jl",
+    "https://github.com/ianshmean/ZlibBuilder/releases/download/v1.2.11/build_Zlib.v1.2.11.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
