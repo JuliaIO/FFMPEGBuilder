@@ -47,7 +47,6 @@ else
 fi
 export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
 pkg-config --list-all
-pkg-config x265 --debug
 ./configure            \
   --enable-cross-compile \
   --cross-prefix=/opt/${target}/bin/${target}- \
@@ -58,6 +57,7 @@ pkg-config x265 --debug
   --pkg-config-flags=--static \
   --prefix=$prefix     \
   --sysroot=/opt/${target}/${target}/sys-root \
+  --extra-libs=-lpthread \
   --enable-gpl         \
   --enable-version3    \
   --enable-nonfree     \
