@@ -24,9 +24,9 @@ if [[ "${target}" == *-linux-* ]]; then
 elif [[ "${target}" == *-apple-* ]]; then
     export ccOS="darwin"
 elif [[ "${target}" == *-w32-* ]]; then
-    export ccOS="win32"
+    export ccOS="mingw32"
 elif [[ "${target}" == *-w64-* ]]; then
-    export ccOS="win64"
+    export ccOS="mingw64"
 elif [[ "${target}" == *-unknown-freebsd* ]]; then
     export ccOS="freebsd"
 else
