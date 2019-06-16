@@ -79,6 +79,31 @@ pkg-config --list-all
   --enable-muxers      \
   --enable-demuxers    \
   --enable-parsers     \
+  --enable-pthreads    \
+  --enable-hardcoded-tables \
+  --enable-ffplay      \
+  --enable-gnutls      \
+  --enable-libaom      \
+  --enable-libbluray   \
+  --enable-libopus     \
+  --enable-librubberband \
+  --enable-libsnappy   \
+  --enable-libtesseract \
+  --enable-libtheora   \
+  --enable-libxvid     \
+  --enable-lzma        \
+  --enable-libfontconfig \
+  --enable-frei0r      \
+  --enable-libopencore-amrnb \
+  --enable-libopencore-amrwb \
+  --enable-libopenjpeg \
+  --enable-librtmp     \
+  --enable-libspeex    \
+  --enable-videotoolbox \
+  --disable-libjack    \
+  --disable-indev=jack \
+  --enable-libaom      \
+  --enable-libsoxr     \
   --extra-cflags="-I${prefix}/include" \
   --extra-ldflags="-L${prefix}/lib"
 make -j${nproc}
