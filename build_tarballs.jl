@@ -60,7 +60,6 @@ pkg-config --list-all
   --dep-cc="${CC}"     \
   --ar="${AR}"         \
   --nm="${NM}"         \
-  --as=yasm            \
   --objcc="${CC} -ObjC" \
   --sysinclude=${prefix}/include \
   --pkg-config=$(which pkg-config) \
