@@ -59,13 +59,10 @@ pkg-config --list-all
   --sysroot=/opt/${target}/${target}/sys-root \
   --extra-libs=-lpthread \
   --enable-gpl         \
-  --enable-version3    \
-  --enable-nonfree     \
   --disable-static     \
   --enable-shared      \
   --disable-debug      \
   --disable-doc        \
-  --enable-avresample  \
   --enable-libass      \
   --enable-libfdk-aac  \
   --enable-libfreetype \
@@ -74,36 +71,10 @@ pkg-config --list-all
   --enable-libx264     \
   --enable-libx265     \
   --enable-libvpx      \
-  --enable-encoders    \
-  --enable-decoders    \
-  --enable-muxers      \
-  --enable-demuxers    \
-  --enable-parsers     \
   --enable-hardcoded-tables \
-  --enable-indevs      \
-#  --enable-ffplay      \
-#  --enable-gnutls      \
-#  --enable-libaom      \
-#  --enable-libbluray   \
-#  --enable-libopus     \
-#  --enable-librubberband \
-#  --enable-libsnappy   \
-#  --enable-libtesseract \
-#  --enable-libtheora   \
-#  --enable-libxvid     \
-#  --enable-lzma        \
-#  --enable-libfontconfig \
-#  --enable-frei0r      \
-#  --enable-libopencore-amrnb \
-#  --enable-libopencore-amrwb \
-#  --enable-libopenjpeg \
-#  --enable-librtmp     \
-#  --enable-libspeex    \
-#  --enable-videotoolbox \
-#  --disable-libjack    \
-#  --disable-indev=jack \
-#  --enable-libaom      \
-#  --enable-libsoxr     \
+  --enable-videotoolbox \
+  --disable-indev=jack \
+  --disable-libjack \
   --extra-cflags="-I${prefix}/include" \
   --extra-ldflags="-L${prefix}/lib"
 make -j${nproc}
