@@ -79,7 +79,6 @@ pkg-config --list-all
   --enable-muxers      \
   --enable-demuxers    \
   --enable-parsers     \
-  --enable-pthreads    \
   --enable-hardcoded-tables \
   --enable-indevs      \
 #  --enable-ffplay      \
