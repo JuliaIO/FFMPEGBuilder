@@ -17,8 +17,8 @@ script = raw"""
 cd $WORKSPACE/srcdir
 cd ffmpeg-4.1/
 sed -i 's/-lflite"/-lflite -lasound"/' configure
-apk add coreutils
-apk add yasm
+apk add coreutils yasm
+
 if [[ "${target}" == *-linux-* ]]; then
     export ccOS="linux"
 elif [[ "${target}" == *-apple-* ]]; then
@@ -32,6 +32,7 @@ elif [[ "${target}" == *-unknown-freebsd* ]]; then
 else
     export ccOS="linux"
 fi
+
 if [[ "${target}" == x86_64-* ]]; then
     export ccARCH="x86_64"
 elif [[ "${target}" == i686-* ]]; then
@@ -45,13 +46,21 @@ elif [[ "${target}" == powerpc64le-* ]]; then
 else
     export ccARCH="x86_64"
 fi
+
 export PKG_CONFIG_PATH="${prefix}/lib/pkgconfig"
 pkg-config --list-all
+
 ./configure            \
   --enable-cross-compile \
   --cross-prefix=/opt/${target}/bin/${target}- \
   --arch=${ccARCH}     \
   --target-os=${ccOS}  \
+  --cc="${CC}"         \
+  --cxx="${CXX}"       \
+  --dep-cc="${CC}"     \
+  --ar="${AR}"         \
+  --nm="${NM}"         \
+  --objcc="${CC} -ObjC" \
   --sysinclude=${prefix}/include \
   --pkg-config=$(which pkg-config) \
   --pkg-config-flags=--static \
@@ -83,7 +92,6 @@ pkg-config --list-all
   --extra-ldflags="-L${prefix}/lib"
 make -j${nproc}
 make install
-
 """
 
 # These are the platforms we will build for by default, unless further
