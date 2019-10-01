@@ -88,6 +88,8 @@ pkg-config --list-all
   --enable-muxers      \
   --enable-demuxers    \
   --enable-parsers     \
+  --enable-openssl     \
+  --disable-schannel   \
   --extra-cflags="-I${prefix}/include" \
   --extra-ldflags="-L${prefix}/lib"
 make -j${nproc}
@@ -150,7 +152,8 @@ dependencies = [
     "https://github.com/JuliaIO/x264Builder/releases/download/v2019.5.25-static/build_x264Builder.v2019.5.25.jl",
     "https://github.com/JuliaIO/x265Builder/releases/download/v3.0.0-static/build_x265Builder.v3.0.0.jl",
     "https://github.com/JuliaPackaging/Yggdrasil/releases/download/Bzip2-v1.0.6-0/build_Bzip2.v1.0.6.jl",
-    "https://github.com/ianshmean/ZlibBuilder/releases/download/v1.2.11/build_Zlib.v1.2.11.jl"
+    "https://github.com/ianshmean/ZlibBuilder/releases/download/v1.2.11/build_Zlib.v1.2.11.jl",
+    "https://github.com/JuliaPackaging/Yggdrasil/releases/download/OpenSSL-v1.1.1%2Bc%2B0/build_OpenSSL.v1.1.1+c.jl",
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
