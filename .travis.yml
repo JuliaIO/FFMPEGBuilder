@@ -54,5 +54,6 @@ deploy:
   skip_cleanup: true
   on:
     repo: JuliaIO/FFMPEGBuilder
+    tags: true
   api-key:
     secure: syrcQn3MTgQxiE2xHemXhyG3dWk5xPOOuYR/+sr0/aXymvT/AyM1s0hpyRzFRokccqJbBF193qqH/rB8JRIf9I5JI+1touA/SratuhLsGp+5FJbF5SWDrfKmCv4HY27OlJm10lCnXPJab7eJRf86ML9Vvjs7uo//ufDjEzi0ns53yKc8hAuztMSAIVFt89hZt/PyG3KdXLAQOHSjrIiBltfRlzJ3DDRh1THAGf8xCZsHMKrGgd0ptbmBlHUT2ZTHtBvyl6Mjcv+PFb0H2al7bXhJfsqAlMzq6lbRBcwGb2q/45Gfz5akZlf0ausbwzHITP0mxeFr+Weh9oxeQc04CQJWGkArsLoLFmn+w+GSiV+witbi6DNrI4+PY29roKjA38a3jDFveyAh+OpixJmyK3vMpvbKJ+rhdp5T6C0rGQn2JCc+ODvyFR6G8mZuICXO4GjIqB38ctfAjZ0w8jFYqMHVrL+C4tdU3eHWehCSRKqICD6XqHuB7ZmaRSYUXA5QyLek/NuXgb5sjWT+tF+3MNrUgeRgIN0tSUKFAE2fsvsEX4k36M26qqk8SX0KPOdilegTVjF7dUGHwtrJQs84e++DoaQMmA0GmAovtMhb/1wI5Y02Irb/DHZ5P3R/OMZxvpiBXXviRUm6zVhn82jVH5W2L7NNdxsIH2xRfEM6JAQ=
