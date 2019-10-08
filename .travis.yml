@@ -1,8 +1,8 @@
 language: julia
 os:
-- linux
+  - linux
 julia:
-- 1.0
+  - 1.2
 notifications:
   email: false
 git:
@@ -10,19 +10,43 @@ git:
 cache:
   timeout: 1000
   directories:
-  - downloads
-  - shards
+    - downloads
+    - shards
 env:
   global:
-  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
-  - BINARYBUILDER_SHARDS_DIR=shards
-  - BINARYBUILDER_AUTOMATIC_APPLE=true
-  - BINARYBUILDER_USE_CCACHE=true
+    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_SHARDS_DIR=shards
+    - BINARYBUILDER_AUTOMATIC_APPLE=true
+    - BINARYBUILDER_USE_CCACHE=true
+  matrix:
+    - TARGET=i686-linux-gnu
+    - TARGET=x86_64-linux-gnu
+    - TARGET=aarch64-linux-gnu
+    - TARGET=arm-linux-gnueabihf
+    - TARGET=powerpc64le-linux-gnu
+    - TARGET=i686-linux-musl
+    - TARGET=x86_64-linux-musl
+    - TARGET=aarch64-linux-musl
+    - TARGET=arm-linux-musleabihf
+    - TARGET=x86_64-apple-darwin14
+    - TARGET=x86_64-unknown-freebsd11.1
+    - TARGET=i686-w64-mingw32
+    - TARGET=x86_64-w64-mingw32
+
 sudo: required
+
+jobs:
+  include:
+    - stage: regenerate build.jl
+      script: julia --color=yes build_tarballs.jl --only-buildjl
+      if: tag IS present
+
 before_script:
-- julia -e 'using Pkg; pkg"add BinaryProvider BinaryBuilder#master; build"'
+  - julia -e 'using Pkg; pkg"add BinaryProvider BinaryBuilder#master; build"'
+
 script:
-- julia build_tarballs.jl
+  - julia --color=yes build_tarballs.jl $TARGET
+
 deploy:
   provider: releases
   file_glob: true
