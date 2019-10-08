@@ -1,8 +1,8 @@
 language: julia
 os:
-  - linux
+- linux
 julia:
-  - 1.2
+- 1.2
 notifications:
   email: false
 git:
@@ -10,50 +10,45 @@ git:
 cache:
   timeout: 1000
   directories:
-    - downloads
-    - shards
+  - downloads
+  - shards
 env:
   global:
-    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
-    - BINARYBUILDER_SHARDS_DIR=shards
-    - BINARYBUILDER_AUTOMATIC_APPLE=true
-    - BINARYBUILDER_USE_CCACHE=true
+  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+  - BINARYBUILDER_SHARDS_DIR=shards
+  - BINARYBUILDER_AUTOMATIC_APPLE=true
+  - BINARYBUILDER_USE_CCACHE=true
   matrix:
-    - TARGET=i686-linux-gnu
-    - TARGET=x86_64-linux-gnu
-    - TARGET=aarch64-linux-gnu
-    - TARGET=arm-linux-gnueabihf
-    - TARGET=powerpc64le-linux-gnu
-    - TARGET=i686-linux-musl
-    - TARGET=x86_64-linux-musl
-    - TARGET=aarch64-linux-musl
-    - TARGET=arm-linux-musleabihf
-    - TARGET=x86_64-apple-darwin14
-    - TARGET=x86_64-unknown-freebsd11.1
-    - TARGET=i686-w64-mingw32
-    - TARGET=x86_64-w64-mingw32
-
+  - TARGET=i686-linux-gnu
+  - TARGET=x86_64-linux-gnu
+  - TARGET=aarch64-linux-gnu
+  - TARGET=arm-linux-gnueabihf
+  - TARGET=powerpc64le-linux-gnu
+  - TARGET=i686-linux-musl
+  - TARGET=x86_64-linux-musl
+  - TARGET=aarch64-linux-musl
+  - TARGET=arm-linux-musleabihf
+  - TARGET=x86_64-apple-darwin14
+  - TARGET=x86_64-unknown-freebsd11.1
+  - TARGET=i686-w64-mingw32
+  - TARGET=x86_64-w64-mingw32
 sudo: required
-
 jobs:
   include:
-    - stage: regenerate build.jl
-      script: julia --color=yes build_tarballs.jl --only-buildjl
-      if: tag IS present
-
+  - stage: regenerate build.jl
+    script: julia --color=yes build_tarballs.jl --only-buildjl
+    if: tag IS present
 before_script:
-  - julia -e 'using Pkg; pkg"add BinaryProvider BinaryBuilder#master; build"'
-
+- julia -e 'using Pkg; pkg"add BinaryProvider BinaryBuilder#master; build"'
 script:
-  - julia --color=yes build_tarballs.jl $TARGET
-
+- julia --color=yes build_tarballs.jl $TARGET
 deploy:
   provider: releases
   file_glob: true
-  file: products/*
   skip_cleanup: true
+  api_key:
+    secure: c6rD8+3qEQvHbATO7+g0HEMdvL8jO9JynJ67F8OE0iEcE3+fB+0nt/92aay307Tc8+5N5XwY1UcLLLkvNgbNLQPCMwUZgw+OsA34g+ISj0p83z2tiFkNAXNE5Km+DBjXh+gCTf+P6yBdE3rga47mZW3/PxlUNfMf4KkU4by5wOUn6VhC8yVQ6iGO985pufomw9oyxjkaYNRatZnkWzHNT4pIgERVyGzXFa1Zm99qmeISCGTp4NTZ33T4BQzFq/oCTamUZItpMzFMKWQ6bDFd41k5u64E7+0vMiw9PFcNxAj1BWwN8HnHmk+XZaz5kpxMu2b38m27ERSjf3edo7ZlTK4nciuNGFg1qKtXmyQewa8bJBZcRkZl9cEhCBnLnNm5SJWSnAsLOZHSi5Gs8Vh2mlosnsRY2cst6AGsnHQvMZG0JaJczZsO7ksiidjYsXZ01d1gs0J3pNUIgFD9k/MIqWhWdAkNRtlJMFL3eq8DzbqlVvIpOZPJ657PTF7uJLxm0mJ+Pa+e5wu1QGxHDHh3+QZ2LLdyTKdVG2uKiMGiyasJsLjbVmfjQhMP1Ft/Qs29xc0FWdcEdxM6ehvArsI4HPGPq34w4tV8qFoZLKW2782R8GTgd0nn3iHpAhu+KslTp46Wq6f8DBVQYVXWHNPVUmk+JYqD+xc+M1VKwAt04vQ=
+  file: products/*
   on:
     repo: JuliaIO/FFMPEGBuilder
     tags: true
-  api-key:
-    secure: syrcQn3MTgQxiE2xHemXhyG3dWk5xPOOuYR/+sr0/aXymvT/AyM1s0hpyRzFRokccqJbBF193qqH/rB8JRIf9I5JI+1touA/SratuhLsGp+5FJbF5SWDrfKmCv4HY27OlJm10lCnXPJab7eJRf86ML9Vvjs7uo//ufDjEzi0ns53yKc8hAuztMSAIVFt89hZt/PyG3KdXLAQOHSjrIiBltfRlzJ3DDRh1THAGf8xCZsHMKrGgd0ptbmBlHUT2ZTHtBvyl6Mjcv+PFb0H2al7bXhJfsqAlMzq6lbRBcwGb2q/45Gfz5akZlf0ausbwzHITP0mxeFr+Weh9oxeQc04CQJWGkArsLoLFmn+w+GSiV+witbi6DNrI4+PY29roKjA38a3jDFveyAh+OpixJmyK3vMpvbKJ+rhdp5T6C0rGQn2JCc+ODvyFR6G8mZuICXO4GjIqB38ctfAjZ0w8jFYqMHVrL+C4tdU3eHWehCSRKqICD6XqHuB7ZmaRSYUXA5QyLek/NuXgb5sjWT+tF+3MNrUgeRgIN0tSUKFAE2fsvsEX4k36M26qqk8SX0KPOdilegTVjF7dUGHwtrJQs84e++DoaQMmA0GmAovtMhb/1wI5Y02Irb/DHZ5P3R/OMZxvpiBXXviRUm6zVhn82jVH5W2L7NNdxsIH2xRfEM6JAQ=
